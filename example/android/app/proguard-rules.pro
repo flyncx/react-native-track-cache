@@ -8,3 +8,10 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+-keep class com.danikula.videocache.** { *; }
+-keep class com.trackcache.** {*;}
+-assumenosideeffects class org.slf4j.Logger {
+    public void trace(...);
+    public void debug(...);
+}
+-dontwarn org.slf4j.impl.StaticLoggerBinder

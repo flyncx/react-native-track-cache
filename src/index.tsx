@@ -24,6 +24,9 @@ const TrackCache = TrackCacheModule
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return TrackCache.multiply(a, b);
+export function registerCache(): Promise<number> {
+  return TrackCache.registerCache();
+}
+export function getProxyUrl(url: string): Promise<string> {
+  return TrackCache.getProxyUrl(url);
 }
