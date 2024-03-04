@@ -4,8 +4,19 @@ caching for react-native-track-player
 
 ## Installation
 
+1. Install via npm or yarn
 ```sh
 npm install react-native-track-cache
+```
+2. Put this into your build.gradle
+```gradle
+allprojects {
+  repositories  {
+    maven {
+            url "$rootDir/../node_modules/react-native-video-cache/android/libs"
+    }
+  }
+}
 ```
 
 ## Usage
