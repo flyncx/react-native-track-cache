@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { Button, ScrollView, Text } from 'react-native';
-import { getProxyUrl, registerCache } from 'react-native-track-cache';
+import {
+  getProxyUrl,
+  registerCache,
+  useCacheProgress,
+} from 'react-native-track-cache';
 
 import setupPlayer from './setup';
 import TrackPlayer, {
@@ -18,6 +22,12 @@ export default function App() {
     uri: 'https://rewave-api.fhx.my.id/player/get/6Ip07GA4aRQ',
     isProxy: false,
   });
+  const progress = useCacheProgress(
+    'https://rewave-api.fhx.my.id/player/get/6Ip07GA4aRQ'
+  );
+  React.useEffect(() => {
+    console.log(progress);
+  }, [progress]);
 
   const [playerState, setPlayerState] = React.useState<State | null>(null);
 
@@ -39,7 +49,6 @@ export default function App() {
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: 'black',
       }}
     >
       <Text
