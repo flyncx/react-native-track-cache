@@ -1,4 +1,5 @@
-import { NativeModules, Platform } from 'react-native';
+import { useEffect, useState } from 'react';
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
   `The package 'react-native-track-cache' doesn't seem to be linked. Make sure: \n\n` +
@@ -29,4 +30,23 @@ export function registerCache(): Promise<number> {
 }
 export function getProxyUrl(url: string): Promise<string> {
   return TrackCache.getProxyUrl(url);
+}
+export function isCached(url: string): Promise<boolean> {
+  return TrackCache.isCached(url);
+}
+export function useCacheProgress(url: string) {
+  const [percent, setPercent] = useState<null | number>(null);
+  useEffect(() => {
+    const eventEmitter = new NativeEventEmitter(TrackCache);
+    let eventListener = eventEmitter.addListener(url, async (event) => {
+      setPercent(event.percentsAvailable);
+    });
+
+    // Removes the listener once unmounted
+    return () => {
+      eventListener.remove();
+    };
+  }, [url, setPercent]);
+
+  return percent;
 }
